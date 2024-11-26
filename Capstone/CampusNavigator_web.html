@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locomotor Disability Monitoring</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSehCywL8-tJQ_7k7RoA3QdFckFjVIJhs"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4 text-center">Locomotor Disability Monitoring</h1>
+        <div id="map" class="w-full h-96 mb-4"></div>
+        <div id="notification" class="hidden bg-red-500 text-white p-4 rounded">
+            <p>Alert: The person has fallen off the wheelchair!</p>
+        </div>
+    </div>
+
+    <script>
+        var map;
+
+        function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(14.243353, 121.112685),
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        }
+
+        function showNotification() {
+            document.getElementById('notification').classList.remove('hidden');
+            // Add a marker at the specified location when the notification is shown
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(14.244248, 121.111292),
+                map: map,
+                title: 'Person Location'
+            });
+            // Center the map on the marker and adjust the zoom level
+            map.setCenter(marker.getPosition());
+            map.setZoom(18);
+        }
+
+        window.onload = function() {
+            initMap();
+            // Simulate a fall event after 5 seconds
+            setTimeout(showNotification, 5000);
+        }
+    </script>
+</body>
+</html>
